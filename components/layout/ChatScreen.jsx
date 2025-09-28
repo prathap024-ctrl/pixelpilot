@@ -11,7 +11,7 @@ import { Response } from '@/components/ai-elements/response';
 
 export const ChatScreen = ({ messages }) => {
     return (
-        <div className="max-w-[54rem] mx-auto p-4 relative size-full rounded-lg h-[580px]">
+        <div className="max-w-[54rem] mx-auto md:p-6 relative size-full rounded-lg h-[580px]">
             <div className="flex flex-col h-full">
                 <Conversation>
                     <ConversationContent>

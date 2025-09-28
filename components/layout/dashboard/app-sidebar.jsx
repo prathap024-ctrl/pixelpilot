@@ -54,15 +54,32 @@ const data = {
 export function AppSidebar({
   ...props
 }) {
-  const { theme } = useTheme()
+  const { theme, systemTheme } = useTheme()
   const { navMain } = useSelector((state) => state.dashboard)
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+
+  const currentTheme = theme === "system" ? systemTheme : theme
+  const logoSrc =
+    currentTheme === "light"
+      ? "/pixelpilot-black.svg"
+      : "/pixelpilot-white.svg"
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className={"border-b"}>
         <div className="flex items-center py-2 px-2">
           <Link href="/">
-            <Image src={theme === "light" ? "/pixelpilot-black.svg" : "/pixelpilot-white.svg"}
-              alt="logo" width={31} height={31} priority />
+            {mounted ? (
+              <Image
+                src={logoSrc}
+                alt="logo"
+                width={31}
+                height={31}
+                priority
+              />
+            ) : (
+              <div className="h-[31px] w-[31px]" />
+            )}
           </Link>
         </div>
       </SidebarHeader>

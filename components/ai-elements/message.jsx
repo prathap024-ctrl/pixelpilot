@@ -24,12 +24,12 @@ const messageContentVariants = cva("is-user:dark flex flex-col gap-2 overflow-hi
   variants: {
     variant: {
       contained: [
-        "max-w-[100%] px-4 py-3",
-        "group-[.is-user]:bg-primary group-[.is-user]:text-primary-foreground",
+        "max-w-[100%] group-[.is-user]:max-w-[80%] group-[.is-user]:mr-4 px-4 py-3",
+        "group-[.is-user]:bg-zinc-100 group-[.is-user]:text-foreground group-[.is-user]:dark:bg-zinc-800",
         "group-[.is-assistant]:bg-transparent group-[.is-assistant]:text-foreground",
       ],
       flat: [
-        "group-[.is-user]:max-w-[80%] group-[.is-user]:bg-secondary group-[.is-user]:px-4 group-[.is-user]:py-3 group-[.is-user]:text-foreground",
+        "group-[.is-user]:max-w-[80%] group-[.is-user]:bg-zinc-800 group-[.is-user]:px-4 group-[.is-user]:py-3 group-[.is-user]:text-foreground",
         "group-[.is-assistant]:text-foreground",
       ],
     },

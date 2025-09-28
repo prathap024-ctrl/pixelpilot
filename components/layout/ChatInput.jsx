@@ -60,7 +60,7 @@ export const ChatInput = ({ status, sendMessage }) => {
     return (
         <>
             <div className='absolute w-full bottom-0 z-50 p-4'>
-                <div className="w-full max-w-3xl mx-auto">
+                <div className="w-full max-w-[44rem] mx-auto">
                     <PromptInput onSubmit={handleSubmit} className="mt-4" globalDrop multiple>
                         <PromptInputBody>
                             <PromptInputAttachments>

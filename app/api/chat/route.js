@@ -1,13 +1,8 @@
-import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { google } from '@ai-sdk/google';
 import { streamText } from 'ai';
 import dotenv from "dotenv"
 
 dotenv.config()
-
-const openrouter = createOpenRouter({
-    apiKey: process.env.OPENROUTER_API_KEY,
-});
-
 
 export const maxDuration = 30
 
@@ -18,8 +13,10 @@ export async function POST(req) {
         if (!msg || msg.length === 0) {
             return new Response('No messages in the request', { status: 400 })
         }
+        console.log("AI Request:", msg);
+        
         const result = streamText({
-            model: openrouter.chat('gpt-4o-mini'),
+            model: google("gemini-2.0-flash"),
             maxOutputTokens: 1000,
             messages: [
                 {
@@ -31,6 +28,8 @@ export async function POST(req) {
         if (!result) {
             return new Response('No response from OpenRouter', { status: 500 })
         }
+        console.log("AI Response:", result);
+        
         return result.toUIMessageStreamResponse()
     } catch (error) {
         return new Response(error.message, { status: 500 })

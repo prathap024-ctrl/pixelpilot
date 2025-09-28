@@ -34,7 +34,7 @@ export const ConversationEmptyState = ({
 }) => (
   <div
     className={cn(
-      "flex size-full flex-col items-center justify-center gap-3 p-8 text-center",
+      "absolute bottom-15 left-8 w-full flex items-center gap-4",
       className
     )}
     {...props}>

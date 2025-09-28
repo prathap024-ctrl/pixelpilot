@@ -13,8 +13,6 @@ export async function POST(req) {
         if (!msg || msg.length === 0) {
             return new Response('No messages in the request', { status: 400 })
         }
-        console.log("AI Request:", msg);
-        
         const result = streamText({
             model: google("gemini-2.0-flash"),
             maxOutputTokens: 1000,
@@ -26,10 +24,8 @@ export async function POST(req) {
             ],
         });
         if (!result) {
-            return new Response('No response from OpenRouter', { status: 500 })
+            return new Response('No response from LLM', { status: 500 })
         }
-        console.log("AI Response:", result);
-        
         return result.toUIMessageStreamResponse()
     } catch (error) {
         return new Response(error.message, { status: 500 })

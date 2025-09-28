@@ -4,12 +4,19 @@ import { ChatScreen } from './ChatScreen'
 import { useChat } from '@ai-sdk/react';
 
 export const ChatUI = () => {
-    const { status, sendMessage, messages } = useChat();
+    const { status, sendMessage, messages, regenerate } = useChat();
     return (
         <>
             <div className="flex flex-col gap-2">
-                <ChatScreen messages={messages} />
-                <ChatInput status={status} sendMessage={sendMessage} />
+                <ChatScreen
+                    messages={messages}
+                    regenerate={regenerate}
+                    status={status}
+                />
+                <ChatInput
+                    status={status}
+                    sendMessage={sendMessage}
+                />
             </div>
         </>
     )

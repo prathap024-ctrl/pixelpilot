@@ -20,20 +20,10 @@ import {
     PromptInputToolbar,
     PromptInputTools,
 } from '@/components/ai-elements/prompt-input';
-import { GlobeIcon, MicIcon } from 'lucide-react';
 import { useState } from 'react';
-import { ChatScreen } from './ChatScreen';
-import { useChat } from '@ai-sdk/react';
-const models = [
-    { id: 'gpt-4o', name: 'GPT-4o' },
-    { id: 'claude-opus-4-20250514', name: 'Claude 4 Opus' },
-];
 
 export const ChatInput = ({ status, sendMessage }) => {
     const [text, setText] = useState('');
-    const [useMicrophone, setUseMicrophone] = useState(false);
-    const [useWebSearch, setUseWebSearch] = useState(false);
-
 
     const handleSubmit = (message) => {
         const hasText = Boolean(message.text);
@@ -48,18 +38,13 @@ export const ChatInput = ({ status, sendMessage }) => {
                 text: message.text || 'Sent with attachments',
                 files: message.files
             },
-            {
-                body: {
-                    webSearch: useWebSearch,
-                },
-            },
         );
         setText('');
     };
 
     return (
         <>
-            <div className='absolute w-full bottom-0 z-50 p-4'>
+            <div className='absolute w-full bottom-0 z-50 p-2'>
                 <div className="w-full max-w-[44rem] mx-auto">
                     <PromptInput onSubmit={handleSubmit} className="mt-4" globalDrop multiple>
                         <PromptInputBody>
@@ -79,20 +64,6 @@ export const ChatInput = ({ status, sendMessage }) => {
                                         <PromptInputActionAddAttachments />
                                     </PromptInputActionMenuContent>
                                 </PromptInputActionMenu>
-                                <PromptInputButton
-                                    onClick={() => setUseMicrophone(!useMicrophone)}
-                                    variant={useMicrophone ? 'default' : 'ghost'}
-                                >
-                                    <MicIcon size={16} />
-                                    <span className="sr-only">Microphone</span>
-                                </PromptInputButton>
-                                <PromptInputButton
-                                    onClick={() => setUseWebSearch(!useWebSearch)}
-                                    variant={useWebSearch ? 'default' : 'ghost'}
-                                >
-                                    <GlobeIcon size={16} />
-                                    <span>Search</span>
-                                </PromptInputButton>
                             </PromptInputTools>
                             <PromptInputSubmit disabled={!text && status === "loading"} status={status} />
                         </PromptInputToolbar>

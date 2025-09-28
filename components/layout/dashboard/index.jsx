@@ -9,6 +9,18 @@ import { ChatUI } from "@/components/layout/index";
 import { ModeToggle } from "./mode-toggle";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import {
+  Context,
+  ContextTrigger,
+  ContextContent,
+  ContextContentHeader,
+  ContextContentBody,
+  ContextContentFooter,
+  ContextInputUsage,
+  ContextOutputUsage,
+  ContextReasoningUsage,
+  ContextCacheUsage,
+} from '@/components/ai-elements/context';
 
 export function DashboardPage() {
   const currentPage = useSelector((state) => state.dashboard.active);
@@ -28,7 +40,7 @@ export function DashboardPage() {
     setOpen(value)
     localStorage.setItem("sidebarState", value ? "open" : "closed")
   }
-  
+
   const renderPage = () => {
     switch (currentPage) {
       case "playground":
@@ -55,11 +67,36 @@ export function DashboardPage() {
               <SidebarTrigger className="-ml-1" />
               <h2 className="text-md font-medium">PixelPilot</h2>
             </div>
-            <div>
-              <ModeToggle />
+            <div className="flex items-center gap-2">
+              <Context
+                maxTokens={128000}
+                usedTokens={40000}
+                usage={{
+                  inputTokens: 32000,
+                  outputTokens: 8000,
+                  totalTokens: 40000,
+                  cachedInputTokens: 0,
+                  reasoningTokens: 0,
+                }}
+                modelId="openai:gpt-4"
+              >
+                <ContextTrigger />
+                <ContextContent>
+                  <ContextContentHeader />
+                  <ContextContentBody>
+                    <ContextInputUsage />
+                    <ContextOutputUsage />
+                    <ContextReasoningUsage />
+                    <ContextCacheUsage />
+                  </ContextContentBody>
+                  <ContextContentFooter />
+                </ContextContent>
+              </Context>
+              <div>
+                <ModeToggle />
+              </div>
             </div>
           </div>
-
         </header>
         <div className="flex flex-1 flex-col gap-4">
           {renderPage()}

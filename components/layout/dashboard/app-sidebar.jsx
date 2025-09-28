@@ -1,12 +1,10 @@
 "use client"
 
-import * as React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Frame,
   Map,
   PieChart,
-  Settings2,
-  SquareTerminal,
 } from "lucide-react"
 
 import { NavMain } from "@/components/layout/dashboard/nav-main"
@@ -23,7 +21,6 @@ import Image from "next/image"
 import { useTheme } from "next-themes"
 import { useSelector } from "react-redux"
 import Link from "next/link"
-import { Separator } from "@/components/ui/separator"
 
 // This is sample data.
 const data = {
@@ -56,8 +53,8 @@ export function AppSidebar({
 }) {
   const { theme, systemTheme } = useTheme()
   const { navMain } = useSelector((state) => state.dashboard)
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => setMounted(true), [])
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   const currentTheme = theme === "system" ? systemTheme : theme
   const logoSrc =

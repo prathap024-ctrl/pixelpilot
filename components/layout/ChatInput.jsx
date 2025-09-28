@@ -21,8 +21,14 @@ import {
     PromptInputTools,
 } from '@/components/ai-elements/prompt-input';
 import { useState } from 'react';
+import { Suggestion, Suggestions } from '../ai-elements/suggestion';
 
-export const ChatInput = ({ status, sendMessage }) => {
+const suggestions = [
+    'Can you explain how to play tennis?',
+    'What is the weather in Tokyo?',
+];
+
+export const ChatInput = ({ status, sendMessage, messages }) => {
     const [text, setText] = useState('');
 
     const handleSubmit = (message) => {
@@ -41,11 +47,23 @@ export const ChatInput = ({ status, sendMessage }) => {
         );
         setText('');
     };
+    const handleSuggestionClick = (suggestion) => {
+        sendMessage({ text: suggestion });
+    };
 
     return (
         <>
             <div className='absolute w-full bottom-0 z-50 p-2'>
                 <div className="w-full max-w-[44rem] mx-auto">
+                    {messages.length === 0 && <Suggestions>
+                        {suggestions.map((suggestion) => (
+                            <Suggestion
+                                key={suggestion}
+                                onClick={handleSuggestionClick}
+                                suggestion={suggestion}
+                            />
+                        ))}
+                    </Suggestions>}
                     <PromptInput onSubmit={handleSubmit} className="mt-4" globalDrop multiple>
                         <PromptInputBody>
                             <PromptInputAttachments>
@@ -65,7 +83,7 @@ export const ChatInput = ({ status, sendMessage }) => {
                                     </PromptInputActionMenuContent>
                                 </PromptInputActionMenu>
                             </PromptInputTools>
-                            <PromptInputSubmit disabled={!text && status === "loading"} status={status} />
+                            <PromptInputSubmit disabled={!text && status === "loading"} status={status === 'streaming' ? 'streaming' : 'ready'} />
                         </PromptInputToolbar>
                     </PromptInput>
                 </div>

@@ -16,6 +16,7 @@ export const ChatUI = () => {
                 <ChatInput
                     status={status}
                     sendMessage={sendMessage}
+                    messages={messages}
                 />
             </div>
         </>

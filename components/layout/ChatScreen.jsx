@@ -14,6 +14,7 @@ import { Check, CopyIcon, RefreshCcwIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { Loader } from '../ai-elements/loader';
+import { Reasoning, ReasoningContent, ReasoningTrigger } from '../ai-elements/reasoning';
 
 
 export const ChatScreen = ({ messages, regenerate, status }) => {
@@ -88,21 +89,16 @@ export const ChatScreen = ({ messages, regenerate, status }) => {
                                                     )}
                                                 </Fragment>
                                             );
-                                        case "image":
+                                        case 'reasoning':
                                             return (
-                                                <Fragment key={`${message.id}-${i}`}>
-                                                    <Message from={message.role}>
-                                                        <MessageContent>
-                                                            <div className="flex justify-center">
-                                                                <Image
-                                                                    {...imageData}
-                                                                    alt="Generated image"
-                                                                    className="h-[300px] aspect-square border rounded-lg"
-                                                                />
-                                                            </div>
-                                                        </MessageContent>
-                                                    </Message>
-                                                </Fragment>
+                                                <Reasoning
+                                                    key={`${message.id}-${i}`}
+                                                    className="w-full"
+                                                    isStreaming={status === 'streaming' && i === message.parts.length - 1 && message.id === messages.at(-1)?.id}
+                                                >
+                                                    <ReasoningTrigger />
+                                                    <ReasoningContent>{part.text}</ReasoningContent>
+                                                </Reasoning>
                                             );
                                         default:
                                             return null;

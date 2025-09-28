@@ -23,6 +23,7 @@ import Image from "next/image"
 import { useTheme } from "next-themes"
 import { useSelector } from "react-redux"
 import Link from "next/link"
+import { Separator } from "@/components/ui/separator"
 
 // This is sample data.
 const data = {
@@ -57,11 +58,11 @@ export function AppSidebar({
   const { navMain } = useSelector((state) => state.dashboard)
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className={"border-b"}>
         <div className="flex items-center py-2 px-2">
           <Link href="/">
             <Image src={theme === "light" ? "/pixelpilot-black.svg" : "/pixelpilot-white.svg"}
-              alt="logo" width={32} height={32} priority />
+              alt="logo" width={31} height={31} priority />
           </Link>
         </div>
       </SidebarHeader>

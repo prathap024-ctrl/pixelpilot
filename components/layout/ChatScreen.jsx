@@ -14,7 +14,7 @@ import { Check, CopyIcon, RefreshCcwIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { Loader } from '../ai-elements/loader';
-import { Reasoning, ReasoningContent, ReasoningTrigger } from '../ai-elements/reasoning';
+import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ai-elements/reasoning';
 
 
 export const ChatScreen = ({ messages, regenerate, status }) => {
@@ -56,6 +56,20 @@ export const ChatScreen = ({ messages, regenerate, status }) => {
                             <Fragment key={message.id}>
                                 {message.parts.map((part, i) => {
                                     switch (part.type) {
+                                        case "reasoning":
+                                            return (
+                                                <Message from={message.role} key={`${message.id}-${i}`}>
+                                                    <MessageContent>
+                                                        <Reasoning
+                                                            className="w-full"
+                                                            isStreaming={status === 'streaming' && i === message.parts.length - 1 && message.id === messages.at(-1)?.id}
+                                                        >
+                                                            <ReasoningTrigger />
+                                                            <ReasoningContent>{part.text}</ReasoningContent>
+                                                        </Reasoning>
+                                                    </MessageContent>
+                                                </Message>
+                                            );
                                         case 'text':
                                             const isLastMessage =
                                                 messageIndex === messages.length - 1;
@@ -88,17 +102,6 @@ export const ChatScreen = ({ messages, regenerate, status }) => {
                                                         </Actions>
                                                     )}
                                                 </Fragment>
-                                            );
-                                        case 'reasoning':
-                                            return (
-                                                <Reasoning
-                                                    key={`${message.id}-${i}`}
-                                                    className="w-full"
-                                                    isStreaming={status === 'streaming' && i === message.parts.length - 1 && message.id === messages.at(-1)?.id}
-                                                >
-                                                    <ReasoningTrigger />
-                                                    <ReasoningContent>{part.text}</ReasoningContent>
-                                                </Reasoning>
                                             );
                                         default:
                                             return null;

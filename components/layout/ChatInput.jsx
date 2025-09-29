@@ -28,7 +28,7 @@ const suggestions = [
     'What is the weather in Tokyo?',
 ];
 
-export const ChatInput = ({ status, sendMessage, messages }) => {
+export const ChatInput = ({ status, sendMessage, messages, stop }) => {
     const [text, setText] = useState('');
 
     const handleSubmit = (message) => {

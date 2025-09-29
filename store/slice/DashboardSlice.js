@@ -14,7 +14,8 @@ const initialState = {
             icon: "settings2",
         },
     ],
-    active: "playground"
+    active: "playground",
+    activeThread: null
 };
 
 const dashboardSlice = createSlice({
@@ -24,8 +25,11 @@ const dashboardSlice = createSlice({
         setActivePage: (state, action) => {
             state.active = action.payload;
         },
+        setActiveThread: (state, action) => {
+            state.activeThread = action.payload;
+        },
     },
 });
 
-export const { setActivePage } = dashboardSlice.actions;
+export const { setActivePage, setActiveThread } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

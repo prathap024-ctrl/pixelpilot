@@ -2,9 +2,15 @@ import React from 'react'
 import { ChatInput } from './ChatInput'
 import { ChatScreen } from './ChatScreen'
 import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport } from 'ai';
 
 export const ChatUI = () => {
-    const { status, sendMessage, messages, regenerate } = useChat();
+    const { status, sendMessage, messages, regenerate } = useChat({
+        transport: new DefaultChatTransport({
+            api: '/api/chat',
+            streamProtocol: "data"
+        })
+    });
     return (
         <>
             <div className="flex flex-col gap-2">

@@ -37,7 +37,7 @@ export const ChatScreen = ({ messages, regenerate, status }) => {
             : "/pixelpilot-white.svg"
 
     return (
-        <div className="max-w-[50rem] mx-auto relative md:p-6 size-full rounded-lg md:h-[calc(100vh-10rem)] h-[calc(100vh-12rem)]">
+        <div className="max-w-[50rem] mx-auto relative md:p-6 size-full rounded-lg md:h-[calc(100vh-9rem)] h-[calc(100dvh-12rem)]">
             <div className="flex flex-col h-full">
                 <Conversation>
                     <ConversationContent>

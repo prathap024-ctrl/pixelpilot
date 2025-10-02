@@ -14,12 +14,14 @@ import {
     ContextReasoningUsage,
     ContextCacheUsage,
 } from '@/components/ai-elements/context';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 export const NavbarComp = () => {
     return (
         <header className='absolute h-16 flex items-center z-50 w-full'>
             <div className="flex items-center w-full justify-between gap-2 px-4">
                 <div className="flex items-center gap-2">
+                    <SidebarTrigger />
                     <h2 className="text-md font-medium">PixelPilot</h2>
                 </div>
                 <div className="flex items-center gap-2">

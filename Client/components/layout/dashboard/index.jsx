@@ -1,46 +1,38 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AppSidebar } from "@/components/layout/dashboard/app-sidebar"
 import {
   SidebarInset,
   SidebarProvider,
 } from "@/components/ui/sidebar"
 
-import { ChatScreen } from "../ChatScreen";
-import { ChatInput } from "../ChatInput";
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
-import { useDashboard } from "@/store/store";
+import { useDashboard } from "@/store/DashboardStore";
 import { ScheduleTaskPage } from "@/components/layout/scheduleTask/ScheduleTask";
 import { NavbarComp } from "./navbar";
+import { useSharedChatContext } from "../ChatProvider";
+import { useRouter } from "next/navigation";
+import { Chat } from "../Chat-client";
 
-export function DashboardPage() {
+export default function DashboardPage() {
   const [mounted, setMounted] = useState(false)
   const [open, setOpen] = useState(true)
-  const [text, setText] = useState('');
-
-  const [threads, setThreads] = useState([]);
-  const [activeThreadId, setActiveThreadId] = useState(null);
   const currentPage = useDashboard((state) => state.currentPage);
+  const router = useRouter()
+  const { session, messages, regenerate, status, sendMessage, text, setText, isPending, error } = useSharedChatContext()
 
-  const renderPage = () => {
+  const renderPage = useCallback(() => {
     switch (currentPage) {
       case "chat":
         return (
           <>
-            <ChatScreen
+            <Chat
               messages={messages}
               regenerate={regenerate}
               status={status}
-            />
-            <ChatInput
               handleSubmit={handleSubmit}
               handleSuggestionClick={handleSuggestionClick}
               setText={setText}
-              text={text}
-              status={status}
-              messages={messages}
-            />
+              text={text} /> 
           </>
         )
       case "scheduleTask":
@@ -49,7 +41,8 @@ export function DashboardPage() {
       default:
         break;
     }
-  }
+  }, [currentPage, messages, regenerate, status, text])
+
 
   useEffect(() => {
     setMounted(true)
@@ -59,11 +52,6 @@ export function DashboardPage() {
     }
   }, [])
 
-  const { status, sendMessage, messages, regenerate } = useChat({
-    transport: new DefaultChatTransport({
-      api: '/api/chat',
-    })
-  });
 
   const handleSubmit = (message) => {
     const hasText = Boolean(message.text);
@@ -90,14 +78,29 @@ export function DashboardPage() {
     localStorage.setItem("sidebarState", value ? "open" : "closed")
   }
 
+  useEffect(() => {
+    if (!session) {
+      router.replace('/auth/sign-in')
+    }
+  }, [session])
+
   if (!mounted) {
     return null
   }
 
+  if (isPending) {
+    return null
+  }
+  if (error) {
+    return <div className="text-center">{error.message}</div>
+  }
+
+
   return (
     <SidebarProvider open={open} onOpenChange={handleOpenChange}>
       <AppSidebar
-
+        session={session}
+        error={error}
       />
       <SidebarInset>
         <>
@@ -110,8 +113,8 @@ export function DashboardPage() {
             </div>
           </div>
         </>
-      </SidebarInset>
-    </SidebarProvider>
+      </SidebarInset >
+    </SidebarProvider >
   );
 }
 

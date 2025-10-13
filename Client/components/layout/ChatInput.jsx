@@ -34,10 +34,10 @@ const suggestions = [
     'Can you generate a personalized daily briefing for me?'
 ];
 
-export const ChatInput = ({ handleSubmit, text, setText, status, handleSuggestionClick, messages }) => {
+export const ChatInput = ({ handleSubmit, text, setText, status, handleSuggestionClick, messages, className }) => {
     return (
         <>
-            <div className='absolute w-full bottom-0 z-50 md:mb-2'>
+            <div className={`absolute w-full ${className}`}>
                 <div className="w-full max-w-[44rem] mx-auto">
                     {messages.length === 0 && <Suggestions>
                         {suggestions.map((suggestion) => (
@@ -48,7 +48,7 @@ export const ChatInput = ({ handleSubmit, text, setText, status, handleSuggestio
                             />
                         ))}
                     </Suggestions>}
-                    <PromptInput onSubmit={handleSubmit} className="mt-4" globalDrop multiple>
+                    <PromptInput onSubmit={handleSubmit} globalDrop multiple>
                         <PromptInputBody>
                             <PromptInputAttachments>
                                 {(attachment) => <PromptInputAttachment data={attachment} />}
@@ -56,6 +56,7 @@ export const ChatInput = ({ handleSubmit, text, setText, status, handleSuggestio
                             <PromptInputTextarea
                                 onChange={(e) => setText(e.target.value)}
                                 value={text}
+                                disabled={status === 'streaming'}
                             />
                         </PromptInputBody>
                         <PromptInputToolbar>

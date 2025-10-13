@@ -13,13 +13,17 @@ export const metadata = {
   description: "PixelPilot AI",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${exo.className} antialiased`}
       >
-        <InnerLayout>{children}</InnerLayout>
+        <InnerLayout>
+          {children}
+        </InnerLayout>
       </body>
     </html>
   );

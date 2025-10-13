@@ -1,20 +1,20 @@
-"use client"
-
 import React, { memo } from "react"
 import { ThemeProvider } from "./layout/dashboard/theme-provider"
 import { Toaster } from "sonner"
 
-const InnerLayoutComponent = ({ children }) => {
+const InnerLayoutComponent = async ({ children }) => {
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <Toaster />
-            {children}
-        </ThemeProvider>
+        <>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+            >
+                <Toaster />
+                {children}
+            </ThemeProvider>
+        </>
     )
 }
 

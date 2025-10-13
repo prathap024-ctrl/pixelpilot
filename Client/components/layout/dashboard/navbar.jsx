@@ -18,13 +18,13 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 
 export const NavbarComp = () => {
     return (
-        <header className='absolute h-16 flex items-center z-50 w-full'>
+        <header className='absolute h-16 flex items-center w-full'>
             <div className="flex items-center w-full justify-between gap-2 px-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 z-50">
                     <SidebarTrigger className={"md:hidden"}/>
                     <h2 className="text-md font-medium">PixelPilot</h2>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 z-50">
                     <Context
                         maxTokens={128000}
                         usedTokens={40000}

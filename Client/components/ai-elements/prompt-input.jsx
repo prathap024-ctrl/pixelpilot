@@ -370,6 +370,7 @@ export const PromptInputBody = ({
 );
 
 export const PromptInputTextarea = ({
+  disabled,
   onChange,
   className,
   placeholder = "What would you like to know?",
@@ -400,13 +401,13 @@ export const PromptInputTextarea = ({
 
   const handlePaste = (event) => {
     const items = event.clipboardData?.items;
-    
+
     if (!items) {
       return;
     }
 
     const files = [];
-    
+
     for (const item of items) {
       if (item.kind === "file") {
         const file = item.getAsFile();
@@ -428,9 +429,10 @@ export const PromptInputTextarea = ({
         "w-full resize-none rounded-none border-none p-3 shadow-none outline-none ring-0",
         "field-sizing-content bg-transparent dark:bg-transparent",
         "max-h-48 min-h-16",
-        "focus-visible:ring-0",
+        "focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
+      disabled={disabled}
       name="message"
       onChange={(e) => {
         onChange?.(e);

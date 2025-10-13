@@ -10,7 +10,7 @@ export const Conversation = ({
   ...props
 }) => (
   <StickToBottom
-    className={cn("relative flex-1 overflow-y-auto", className)}
+    className={cn("relative w-full flex-1 overflow-y-auto", className)}
     initial="smooth"
     resize="smooth"
     role="log"
@@ -21,20 +21,20 @@ export const ConversationContent = ({
   className,
   ...props
 }) => (
-  <StickToBottom.Content className={cn(className)} {...props} />
+  <StickToBottom.Content className={cn("max-w-[46rem] mx-auto", className)} {...props} />
 );
 
 export const ConversationEmptyState = ({
   className,
-  title = "No messages yet",
-  description = "Start a conversation to see messages here",
+  title = "",
+  description = "",
   icon,
   children,
   ...props
 }) => (
   <div
     className={cn(
-      "absolute flex top-1/2 items-center p-4 w-full max-w-3xl gap-2",
+      "absolute flex flex-col text-center gap-4 justify-center items-center size-full",
       className
     )}
     {...props}>
@@ -42,9 +42,11 @@ export const ConversationEmptyState = ({
       <>
         {icon && <div className="text-muted-foreground">{icon}</div>}
         <div className="space-y-1">
-          <h3 className="font-medium text-sm">{title}</h3>
+          <h3 className="font-semibold text-3xl">
+            {title}
+          </h3>
           {description && (
-            <p className="text-muted-foreground text-sm">{description}</p>
+            <p className="dark:text-white text-muted-foreground text-lg">{description}</p>
           )}
         </div>
       </>
